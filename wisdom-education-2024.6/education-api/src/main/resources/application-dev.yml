@@ -1,0 +1,52 @@
+server:
+  port: 80
+spring:
+  rabbitmq:
+     host: 127.0.0.1
+     port: 5672
+     username: rabbitmq
+     password: 123456
+     virtual-host: /
+     publisher-confirms: true
+     publisher-returns: true
+     listener:
+        simple:
+         acknowledge-mode: manual #开启手动确认模式
+  redis:
+    jedis:
+      pool:
+        max-active: 20
+        max-wait: 30
+        max-idle: 8
+        min-idle: 0
+    host: 127.0.0.1
+    password: 123456
+    port: 6379
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/education_final?serverTimezone=GMT%2B8&useSSL=true&useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      #数据库连接超时时间
+      connection-timeout: 30000
+      #连接池最大连接数，默认是10
+      maximum-pool-size: 30
+      #最小空闲连接数量
+      minimum-idle: 10
+      # 此属性控制池中连接的最长生命周期，值0表示无限生命周期
+      max-lifetime: 6000
+  ## 文件上传大小限制
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
+  cache:
+    type: caffeine
+ueditor:
+  configFileName: config-dev.json
+
+## 文件上传根路径
+file:
+  uploadPath: F:\\uploads\\
+

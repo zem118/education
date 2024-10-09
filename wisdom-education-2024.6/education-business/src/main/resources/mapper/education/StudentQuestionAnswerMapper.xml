@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.education.business.mapper.education.StudentQuestionAnswerMapper">
+
+    <select id="selectQuestionAnswerList" resultType="com.education.model.dto.QuestionInfoAnswer">
+        select
+             question.id,
+             question.content,
+             question.video_url,
+             question.answer,
+             question.question_type,
+             question.options,
+             question.analysis,
+             question.summarize,
+             question_answer.comment,
+             question_answer.student_answer,
+             question_answer.correct_status,
+             question_answer.question_points question_mark,
+             question_answer.mark student_mark
+        from question_info question
+        inner join student_question_answer question_answer on question.id = question_answer.question_info_id
+        where question_answer.student_id = #{studentId} and question_answer.exam_info_id = #{examInfoId}
+    </select>
+</mapper>

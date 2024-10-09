@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.education.business.mapper.education.StudentWrongBookMapper">
+
+    <select id="selectPageList" resultType="com.education.model.dto.QuestionInfoAnswer">
+       select
+        question.id question_info_id,
+        question.content,
+        question.options,
+        question.analysis,
+        question.answer,
+        question.video_url,
+        question.question_type,
+        wrong_book.student_answer,
+        subject.id subject_id,
+        subject.name subject_name,
+        wrong_book.mark student_mark,
+        wrong_book.create_date,
+        wrong_book.question_mark,
+        wrong_book.correct_status
+        from question_info question, student_wrong_book wrong_book, subject_info subject
+       where question.id = wrong_book.question_info_id and question.subject_id = subject.id
+
+       and wrong_book.student_id = #{wrongBookQuery.studentId}
+
+       <if test="wrongBookQuery.subjectId != null">
+           and question.subject_id = #{wrongBookQuery.subjectId }
+       </if>
+
+        <if test="wrongBookQuery.questionType != null">
+            and question.question_type = #{wrongBookQuery.questionType }
+        </if>
+        order by wrong_book.id desc
+    </select>
+</mapper>

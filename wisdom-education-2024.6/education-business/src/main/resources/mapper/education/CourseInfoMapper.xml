@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.education.business.mapper.education.CourseInfoMapper">
+
+    <select id="selectPageList" resultType="courseInfoDto">
+       select course.*, subject.name subject_name, grade.name gradeInfoName from course_info course left join subject_info subject
+       on course.subject_id = subject.id
+       left join grade_info grade on course.grade_info_id = grade.id
+       <where>
+           <if test="courseInfo.name != null and courseInfo.name != ''">
+               <bind name="name" value="'%' + courseInfo.name + '%'"/>
+               and course.name like #{name}
+           </if>
+
+           <if test="courseInfo.recommendIndexFlag != null">
+               and course.recommend_index_flag = #{courseInfo.recommendIndexFlag}
+           </if>
+
+           <if test="courseInfo.gradeInfoId != null">
+               and course.grade_info_id = #{courseInfo.gradeInfoId}
+           </if>
+
+           <if test="courseInfo.subjectId != null">
+               and course.subject_id = #{courseInfo.subjectId}
+           </if>
+       </where>
+       order by course.sort desc
+    </select>
+</mapper>
